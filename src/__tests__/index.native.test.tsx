@@ -1,10 +1,17 @@
 import { beforeEach, expect, vi, test } from 'vitest';
 import { render } from '@testing-library/react';
-import Stack, { setDefaultGap } from '../index.native.tsx';
-import { createElement } from 'react';
-import { StyleProp, View, ViewProps, ViewStyle } from 'react-native';
+import Stack, { asStack, setDefaultGap } from '../index.native.tsx';
+import { createElement, ReactNode } from 'react';
+import {
+  Pressable,
+  PressableProps,
+  StyleProp,
+  View,
+  ViewProps,
+  ViewStyle,
+} from 'react-native';
 
-const flattenStyle = (style: StyleProp<ViewStyle>) =>
+const flattenStyle = <T,>(style: StyleProp<T>) =>
   Array.isArray(style)
     ? // @ts-expect-error: We only care about one level of styles.
       style.reduce((object, item) => ({ ...object, ...item }), {})
@@ -12,6 +19,16 @@ const flattenStyle = (style: StyleProp<ViewStyle>) =>
 
 vi.mock('react-native', () => {
   return {
+    Pressable: ({
+      children,
+      style,
+      ...props
+    }: Omit<PressableProps, 'children'> & { children: ReactNode }) =>
+      createElement(
+        'pressable',
+        { ...props, style: flattenStyle(style) },
+        children,
+      ),
     View: ({ children, style, ...props }: ViewProps) =>
       createElement('view', { ...props, style: flattenStyle(style) }, children),
   };
@@ -641,6 +658,9 @@ test('does not work if the component does not have a style prop', () => {
     </view>
   `,
   );
+
+  // @ts-expect-error
+  asStack(NoStyle);
 });
 
 test('supports the `ref` prop', () => {
@@ -654,4 +674,45 @@ test('supports the `ref` prop', () => {
       Content
     </view>
   `);
+});
+
+test('supports an `asStack` function to turn a component into a Stack', () => {
+  const Link = ({
+    children,
+    style,
+    to,
+  }: {
+    children: React.ReactNode;
+    style?: ViewStyle;
+    to: string;
+  }) => (
+    <Pressable onPress={() => /*router.push(to)*/ to} style={style}>
+      {children}
+    </Pressable>
+  );
+
+  const StackLink = asStack(Link);
+
+  const { container } = render(
+    <StackLink to="https://nakazawa.tech">Nakazawa Tech</StackLink>,
+  );
+
+  expect(container.firstChild).toMatchInlineSnapshot(`
+    <pressable
+      style="flex-direction: row; flex-wrap: nowrap; justify-content: flex-start;"
+    >
+      Nakazawa Tech
+    </pressable>
+  `);
+
+  // @ts-expect-error
+  const tsErrorA = <StackLink className="test-class">Nakazawa Tech</StackLink>;
+
+  // @ts-expect-error
+  const tsErrorB = (
+    // @ts-expect-error
+    <StackLink as="div" className="test-class" to="Test">
+      Nakazawa Tech
+    </StackLink>
+  );
 });

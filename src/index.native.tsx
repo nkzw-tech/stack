@@ -1,6 +1,7 @@
 import {
   ComponentProps,
   ComponentPropsWithRef,
+  ComponentType,
   ElementType,
   useMemo,
 } from 'react';
@@ -15,16 +16,14 @@ import {
 import { resolveAlignment } from './Alignment.tsx';
 export { setDefaultGap, type Gap } from './Gap.tsx';
 
+type BaseStackProps<Component extends ElementType> = StackPropsInternal &
+  Omit<ComponentProps<Component>, PropsToOmit<Component, StackPropsInternal>> &
+  Partial<Pick<ComponentPropsWithRef<Component>, 'ref'>>;
+
 export type StackProps<Component extends ElementType = typeof View> =
   AcceptsStyle<Component> extends never
     ? never
-    : AsProp<Component> &
-        StackPropsInternal &
-        Omit<
-          ComponentProps<Component>,
-          PropsToOmit<Component, StackPropsInternal>
-        > &
-        Partial<Pick<ComponentPropsWithRef<Component>, 'ref'>>;
+    : AsProp<Component> & BaseStackProps<Component>;
 
 let Stack = function Stack<Component extends ElementType = typeof View>({
   alignCenter,
@@ -180,3 +179,21 @@ export default Stack;
 export const VStack = <Component extends ElementType = 'div'>(
   props: StackProps<Component> & { vertical?: never },
 ) => <Stack {...props} vertical />;
+
+export const asStack = <Component extends ElementType = 'div'>(
+  Component: AcceptsStyle<Component>,
+): ComponentType<BaseStackProps<Component>> => {
+  const StackComponent = (props: BaseStackProps<Component>) => (
+    <Stack {...(props as StackProps<Component>)} as={Component} />
+  );
+
+  const name =
+    typeof Component === 'string'
+      ? Component
+      : ('displayName' in (Component as ComponentType<unknown>) &&
+          Component.displayName) ||
+        ('name' in (Component as ComponentType<unknown>) && Component.name);
+  StackComponent.displayName = name ? `Stack(${name})` : `Stack`;
+
+  return StackComponent;
+};

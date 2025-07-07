@@ -1,6 +1,6 @@
 import { beforeEach, expect, test } from 'vitest';
 import { render } from '@testing-library/react';
-import Stack, { setDefaultGap, VStack } from '../index.tsx';
+import Stack, { asStack, setDefaultGap, VStack } from '../index.tsx';
 import { CSSProperties } from 'react';
 
 beforeEach(() => {
@@ -658,6 +658,9 @@ test('does not work if the component does not have a style prop', () => {
     </a>
   `,
   );
+
+  // @ts-expect-error
+  asStack(NoStyle);
 });
 
 test('exports a VStack component that is vertical by default', () => {
@@ -696,4 +699,51 @@ test('supports the `ref` prop', () => {
       Content
     </div>
   `);
+});
+
+test('supports an `asStack` function to turn a component into a Stack', () => {
+  const Link = ({
+    children,
+    className,
+    style,
+    to,
+  }: {
+    children: React.ReactNode;
+    className: string;
+    style?: CSSProperties;
+    to: string;
+  }) => (
+    <a className={className} href={to} style={style}>
+      {children}
+    </a>
+  );
+
+  const StackLink = asStack(Link);
+
+  const { container } = render(
+    <StackLink className="test-class" to="https://nakazawa.tech">
+      Nakazawa Tech
+    </StackLink>,
+  );
+
+  expect(container.firstChild).toMatchInlineSnapshot(`
+    <a
+      class="test-class"
+      href="https://nakazawa.tech"
+      style="display: flex; flex-direction: row; flex-wrap: nowrap; justify-content: flex-start;"
+    >
+      Nakazawa Tech
+    </a>
+  `);
+
+  // @ts-expect-error
+  const tsErrorA = <StackLink className="test-class">Nakazawa Tech</StackLink>;
+
+  // @ts-expect-error
+  const tsErrorB = (
+    // @ts-expect-error
+    <StackLink as="div" className="test-class" to="Test">
+      Nakazawa Tech
+    </StackLink>
+  );
 });

@@ -397,6 +397,26 @@ Stack carries over component props from custom components in a type-safe manner:
 </Stack>
 ```
 
+## Use `asStack` to convert any component to a Stack
+
+You can use the `asStack` utility to convert any component into a Stack component, allowing you to use all Stack props seamlessly:
+
+```tsx
+import { asStack } from '@nkzw/stack';
+
+const Link = asStack(({ to, children, ...props }) => (
+  <a href={to} {...props}>
+    {children}
+  </a>
+));
+
+<Link to="/home" center gap={16}>
+  Home
+</Link>;
+```
+
+_**Note:** Any component wrapped with `asStack` needs to support a `style` prop._
+
 ## Examples
 
 ### Card Layout
