@@ -415,7 +415,7 @@ const Link = asStack(({ to, children, ...props }) => (
 </Link>;
 ```
 
-_**Note:** Any component wrapped with `asStack` needs to support a `style` prop._
+_**Note:** Components wrapped with `asStack` or when used with `as` must support a `style` prop._
 
 ## Examples
 
