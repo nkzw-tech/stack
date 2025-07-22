@@ -5,14 +5,15 @@ import {
   ElementType,
   useMemo,
 } from 'react';
+import { resolveAlignment } from './Alignment.tsx';
+import { resolveGap } from './Gap.tsx';
 import {
   AcceptsStyle,
   AsProp,
   PropsToOmit,
   StackPropsInternal,
 } from './Types.js';
-import { resolveGap } from './Gap.tsx';
-import { resolveAlignment } from './Alignment.tsx';
+
 export { setDefaultGap, type Gap } from './Gap.tsx';
 
 type BaseStackProps<Component extends ElementType> = StackPropsInternal &

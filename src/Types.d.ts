@@ -1,4 +1,4 @@
-import { ElementType, ComponentProps, ReactNode } from 'react';
+import { ComponentProps, ElementType, ReactNode } from 'react';
 import { Gap } from './Gap.tsx';
 
 export type AlignContent =

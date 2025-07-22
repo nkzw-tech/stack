@@ -1,6 +1,4 @@
-import { beforeEach, expect, vi, test } from 'vitest';
 import { render } from '@testing-library/react';
-import Stack, { asStack, setDefaultGap } from '../index.native.tsx';
 import { createElement, ReactNode } from 'react';
 import {
   Pressable,
@@ -10,6 +8,8 @@ import {
   ViewProps,
   ViewStyle,
 } from 'react-native';
+import { beforeEach, expect, test, vi } from 'vitest';
+import Stack, { asStack, setDefaultGap } from '../index.native.tsx';
 
 const flattenStyle = <T,>(style: StyleProp<T>) =>
   Array.isArray(style)

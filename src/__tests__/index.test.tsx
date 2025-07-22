@@ -1,7 +1,7 @@
-import { beforeEach, expect, test } from 'vitest';
 import { render } from '@testing-library/react';
-import Stack, { asStack, setDefaultGap, VStack } from '../index.tsx';
 import { CSSProperties } from 'react';
+import { beforeEach, expect, test } from 'vitest';
+import Stack, { asStack, setDefaultGap, VStack } from '../index.tsx';
 
 beforeEach(() => {
   setDefaultGap(8);
