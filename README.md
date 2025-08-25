@@ -117,7 +117,7 @@ import Stack from '@nkzw/stack';
 Or with React Native:
 
 ```tsx
-import Stack from '@nkzw/stack/native';
+import Stack from '@nkzw/stack';
 
 <Stack vertical gap={16}>
   <Text>Apple</Text>
