@@ -7,11 +7,13 @@ You always end up with visual clutter and boilerplate when using flexbox, no mat
 ```tsx
 import Stack from '@nkzw/stack';
 
-<Stack vertical gap center>
-  <div>Apple</div> // Use on web
-  <View>Banana</View> // Use in React Native
-  <Item>Kiwi</Item>
-</Stack>;
+const Component = () => (
+  <Stack vertical gap center>
+    <div>Apple</div> {/* Works on the web */}
+    <View>Banana</View> {/* Works in React Native */}
+    <Item>Kiwi</Item>
+  </Stack>
+);
 ```
 
 Other benefits include:
@@ -117,13 +119,11 @@ import Stack from '@nkzw/stack';
 Or with React Native:
 
 ```tsx
-import Stack from '@nkzw/stack';
-
 <Stack vertical gap={16}>
   <Text>Apple</Text>
   <Text>Banana</Text>
   <Text>Kiwi</Text>
-</Stack>;
+</Stack>
 ```
 
 If you are using NativeWind, `<Stack />` will automatically support `className`:
@@ -141,11 +141,13 @@ There is also a shorthand for vertical stacks:
 ```tsx
 import { VStack } from '@nkzw/stack';
 
-<VStack gap={16}> // Same as `<Stack vertical gap={16}>`.
+<VStack gap={16}>
   <div>Apple</div>
   <div>Banana</div>
   <div>Kiwi</div>
 </VStack>;
+
+// Same as `<Stack vertical gap={16}>`.
 ```
 
 ### Padding
