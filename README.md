@@ -394,8 +394,12 @@ Stack carries over component props from custom components in a type-safe manner:
 
 ```tsx
 <Stack as="nav" center gap={24}>
-  <Stack as={Link} to="/home">Home</Stack>
-  <Stack as={Link} to="/about">About</a>
+  <Stack as={Link} to="/home">
+    Home
+  </Stack>
+  <Stack as={Link} to="/about">
+    About
+  </Stack>
 </Stack>
 ```
 
