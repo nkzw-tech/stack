@@ -1,6 +1,6 @@
 {
   "name": "@nkzw/stack",
-  "version": "2.3.0",
+  "version": "2.3.1",
   "description": "Zero-dependency, type-safe Stack component for streamlining flexbox usage in React & React Native.",
   "homepage": "https://github.com/nkzw-tech/stack",
   "repository": {
