@@ -68,7 +68,6 @@ export default function Stack<Component extends ElementType = 'div'>({
               : undefined,
       alignSelf: resolveAlignment(self),
       display: inline ? 'inline-flex' : 'flex',
-      flex: flex1 ? 1 : undefined,
       flexDirection: vertical
         ? reverse
           ? 'column-reverse'
@@ -90,6 +89,7 @@ export default function Stack<Component extends ElementType = 'div'>({
               : around
                 ? 'space-around'
                 : 'flex-start',
+      ...(flex1 ? { flex: '1 1 0%' } : {}),
     };
 
     const gap = resolveGap(_gap);

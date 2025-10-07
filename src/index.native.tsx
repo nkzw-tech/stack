@@ -69,7 +69,6 @@ let Stack = function Stack<Component extends ElementType = typeof View>({
               ? 'baseline'
               : undefined,
       alignSelf: resolveAlignment(self),
-      flex: flex1 ? 1 : undefined,
       flexDirection: vertical
         ? reverse
           ? 'column-reverse'
@@ -91,6 +90,7 @@ let Stack = function Stack<Component extends ElementType = typeof View>({
               : around
                 ? 'space-around'
                 : 'flex-start',
+      ...(flex1 ? { flex: 1 } : {}),
     };
 
     const gap = resolveGap(_gap);

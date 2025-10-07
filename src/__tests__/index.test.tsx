@@ -199,7 +199,7 @@ test('renders with flex1', () => {
   const { container } = render(<Stack flex1>Content</Stack>);
   expect(container.firstChild).toMatchInlineSnapshot(`
     <div
-      style="display: flex; flex-direction: row; flex-wrap: nowrap; justify-content: flex-start; flex-basis: 0%;"
+      style="display: flex; flex-direction: row; flex-wrap: nowrap; justify-content: flex-start; flex-grow: 1; flex-shrink: 1; flex-basis: 0%;"
     >
       Content
     </div>
@@ -317,7 +317,7 @@ test('renders with multiple props combined', () => {
   );
   expect(container.firstChild).toMatchInlineSnapshot(`
     <div
-      style="align-items: center; display: flex; flex-direction: column; flex-wrap: wrap; justify-content: flex-start; gap: 16px; padding: 16px; flex-basis: 0%;"
+      style="align-items: center; display: flex; flex-direction: column; flex-wrap: wrap; justify-content: flex-start; gap: 16px; padding: 16px; flex-grow: 1; flex-shrink: 1; flex-basis: 0%;"
     >
       Content
     </div>
